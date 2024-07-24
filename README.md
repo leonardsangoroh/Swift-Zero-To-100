@@ -146,3 +146,130 @@ Your goal is to write a Swift playground that:
     var tempFahrenheit = ((tempCelsius * 9) / 5) + 32
     print(tempFahrenheit) 
 ```
+
+## Store Ordered Data in Arrays
+Arrays can only store one data type at a time
+
+```Swift
+    var carModels = ["BMW", "Mercedez", "Toyota", "Mazda"]
+    var numbers = [1,2,3,4,5,6,7,8,9]
+    var temp = [22.3, 25.6, 12.4]
+```
+
+- Reading Values From Array
+```Swift
+    var fastestCar = carModels[0]
+```
+
+- Add Items To Array: Only if it was declared as a variable
+```Swift
+    carModels.append("Mobius")
+```
+
+- Declaring an Empty Array
+```Swift
+    var albums = Array<Stringt>()
+    albums.append("African Giant")
+
+    var numbers = [Int]()
+    numbers.append(4)
+```
+
+- Count Number of Items in Array
+```Swift
+    var carCount = carModels.count
+```
+
+- Remove Items From Array
+```Swift
+    //remove specific item
+    carModels.remove(at: 2)
+    // remove all items
+    carModels.removeAll()
+```
+
+- Check whether Array Contains an Item
+```Swift
+    if carModels.contains("Toyota") {
+        print("Japan Made It")
+    }
+```
+
+- Sort Items in an Array: Ascending Order <br>
+NB: Returns a new array, while the original array remains unchanged
+```Swift
+    let cities = ["Nairobi", "Tanzania", "Kigali", "Cape Town"]
+    print(cities.sorted())
+```
+
+- Reverse Items in an Array
+```Swift
+    print(cities.reversed())
+```
+
+## Storing & Finding Data in Dictionaries
+Dictionaries don't store items according to their position like arrays do, but instead let us decide where items should be stored. <br>
+Dictionaries stores associations between keys of the same type and values of the same type in a collection with no defined ordering <br>
+When reading from a dictionary, there's a chance that the key does not exist, or the key has no value, hence it always returns an optional. <br>
+When reading from a dictionary, you can provide a default value to use if the key does not exist
+```Swift
+    let employee = [
+        "name" : "Leonard Sangoroh",
+        "job" : "Software Engineer",
+        "location" : "Nairobi, Kenya"
+    ]
+
+    print(employee["name", default: "Unknown"])
+
+    let olympics = [
+        2012 : "London",
+        2016 : "Rio de Janeiro",
+        2020 : "Tokyo"
+    ]
+
+    print(olympics[2012, default: "Unknown"])
+
+    //create an empty dictionary
+    let heroes = [String : String]
+    heroes["Kenya"] = "Dedan Kimathi"
+```
+
+The .count and removeAll() functions both exist for dictionaries
+
+## Using Sets for Fast Data Lookup
+They are similar to arrays, except that they don't store duplicates and don't store items in any particular order
+```Swift
+    let people = Set(["Lee", "Natty"])
+```
+
+- Declaring an Empty Set
+```Swift
+    let emptySet = Set<String>()
+    emptySet.insert("Filling Set")
+```
+
+Alongside .contains(), sets also have the .count and .sorted() functions
+
+## Creating and Using Enums (Enumerations)
+An enum is a set of named values that can be created and used in your code <br>
+Enums let us define a new data type with a handful of specific values that it can have
+```Swift
+    enum Weekday {
+        case monday
+        case tuesday
+        case wednesday
+        case thursday
+        case friday
+    }
+
+    var dayOfTheWeek = Weekday.monday
+
+```
+
+Once you assign a value to a variable or constant, its data type becomes fixed <br>
+For enums this means once can skip the enum name after the first assignment
+```Swift
+    var day = Weekday.monday
+    day = .tuesday
+    day = .friday
+```
