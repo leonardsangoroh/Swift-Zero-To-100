@@ -273,3 +273,21 @@ For enums this means once can skip the enum name after the first assignment
     day = .tuesday
     day = .friday
 ```
+
+## Using Type Annotations
+Type annotation let's us be specific about the data type we want
+```Swift
+    let name: String = "Lee"
+    let age: Int = 23
+    let height: Double = 1.76
+    let sharp: Bool = true
+    let schoolsLearnt: [String] = ["MEC", "Mang'u", "Strathmore"]
+    let details: [String: String] = ["id": "134327"]
+    let booksRead: Set<String> = Set(["The Subtle Art...", "How to Make Friends & Influence People"])
+```
+Declaring an empty array
+```Swift
+    var countries: [String] = [String]()
+    var towns = [String]()
+    var cities: [String] = []
+```
