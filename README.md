@@ -291,3 +291,11 @@ Declaring an empty array
     var towns = [String]()
     var cities: [String] = []
 ```
+## Checkpoint 2
+This time the challenge is to create an array of strings, then write some code that prints the number of items in the array and also the number of unique items in the array.
+```Swift
+    var carModels = ["BMW", "Mercedez", "Toyota", "Mazda"]
+    print(carModels.count)
+    var uniqueCarModels = Set(carModels)
+    print(uniqueCarModels.count)
+```
