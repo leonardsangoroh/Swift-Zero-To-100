@@ -489,5 +489,113 @@ The ternary operator lets us check a condition and return one of two values
 
     let background = theme == .dark ? "black" : "white"
     print(background)
+```
 
+# Using a For Loop to Repeat Work
+
+- Print each Item in an Array
+```Swift
+
+    // loop body - code inside the braces
+    // loop iteration - one cycle through the loop body
+    // loop variable - exists only inside the loop body & will change to a new value in the next loop iteration
+
+    let platforms = ["iOS", "macOS", "tvOS", "wathcOS", "visionOS"]
+
+    for os in platforms {
+        print("Swift works on \(os))
+    }
+```
+- Loop over fixed range of numbers
+```Swift
+    // prints 1 to 12 (including 12)
+    for i in 1...12 {
+        print(i)
+    }
+```
+
+- Put loops inside loops (nested loops)
+```Swift
+    for i in 1...12 {
+        for j in 1...12 {
+            print("\(i) x \(j) is \(i*j)")
+        }
+    }
+```
+- Loop over fixed range of numbers
+```Swift
+    // prints 1 to 11 (excluding 12)
+    for i in 1..<12 {
+        print(i)
+    }
+```
+
+- Loop over without need for a variable
+```Swift
+    // prints 1 to 4 (including 4)
+    for _ in 1...4 {
+        print("Help")
+    }
+```
+## Using a While Loop to Repeat Work
+A while loop continuously executes a loop until the condition is false
+- Basic while loop
+```Swift
+    var countdown = 10
+
+    while countdown > 0 {
+        print("\(countdown)")
+        countdown -= 1
+    }
+
+    print("blast off!")
+```
+
+While loops are useful when the iterations of a loop can't be determined at the start <br>
+For example; when rolling a virtual dice and ending the loop when 6 is rolled
+```Swift
+    var roll = 0
+
+    while roll != 6 {
+        roll = Int.random(in: 1...6)
+        print("I rolled a \(roll)")
+    }
+```
+## Skipping Loop Items with Break & Continue
+- Continue: skips the current loop iteration
+- Break: exits the loop skips all remaining iterations
+
+```Swift
+    // continue
+    // if filename does not have ".jpg" as suffix, skip it and move to the next iteration
+    let filenames = ["me.jpg", "work.txt", "sophie.jpg", "logo.psd"]
+
+    for filename in filenames {
+        if filename.hasSuffix(".jpg") == false {
+            continue
+        }
+
+        print("Found picture: \(filename)")
+    }
+
+    /* break
+     checking multiples for two numbers
+     if i is a multiple of both 4 and 14, append it to the integer array
+     once the 10 multiples are appended, call break to exit the loop
+    */
+    let number1 = 4
+    let number2 = 14
+    var multiples = [Int]()
+
+    for i in 1...100_000 {
+        if i.isMultiple(of: number1) && i.isMultiple(of: number2) {
+            multiples.append(i)
+
+            if multiples.count == 10 {
+                break
+            }
+        }
+    }
+
+    print(multiples)
 ```
