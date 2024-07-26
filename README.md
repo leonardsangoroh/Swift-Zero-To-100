@@ -299,3 +299,195 @@ This time the challenge is to create an array of strings, then write some code t
     var uniqueCarModels = Set(carModels)
     print(uniqueCarModels.count)
 ```
+## Check whether condition is True or False
+Programs very often make choices, and Swift handles this with **if** statements <br>
+if statements lets us check whether a condition is true
+```Swift
+    let score = 85
+
+    if score > 80 {
+        print("Great job!")
+    }
+
+    // comparison operators also works with strings
+    // they are compared alphabetically
+    let ourName = "Dave Lister"
+    let friendName = "Arnold Rimmer"
+
+    if ourName < friendName {
+        print("It's \(ourName) vs \(friendName)")
+    }
+
+    if ourName > friendName {
+        print("It's \(friendName) vs \(ourName)")
+    }
+
+    //equality operator
+    let country = "Kenya"
+
+    if country == "Kenya" {
+        print("Naipenda nchi yangu \(country)")
+    }
+
+    // not equal operator
+    if country != "Kenya" {
+        print("I haven't been there before")
+    }
+
+    //check if a string is empty
+    if country.isEmtpy == true {
+        print("Empty")
+    }
+
+    if country.isEmpty {
+        print("Empty")
+    }
+```
+
+## Checking Multiple Conditions
+```Swift
+    // using else block for mutually exclusive conditions
+    let age = 17
+
+    if age >= 18 {
+        print("You can vote")
+    } else {
+        print("Try again next election")
+    }
+
+    // using else if, where you can run a new check if the first one fails
+    // there can only be one 'else'
+    // 'else' means; if all other conditions have been false
+    let a = false
+    let b = true
+
+    if a {
+        print("Code to run if a is true")
+    } else if b {
+        print("Code to run if a is false but b is true")
+    } else {
+        print("Code to run if both a and b are false")
+    }
+```
+
+- Making more advanced conditions
+```Swift
+    // if today's temperature is over 20 degrees but under 30 degrees, print a message
+    let temp = 25
+
+    if temp > 20 {
+        if temp < 30 {
+            print("Favorable weather conditions")
+        }
+    }
+
+    // logical 'and'
+    if temp > 20 && temp < 30 {
+        print("Favorable weather conditions")
+    }
+
+    // logical 'or'
+    let userAge = 14
+    let hasParentalConsent = true
+
+    if userAge >= 18 || hasParentalConsent == true {
+        print("You can buy the game")
+    }
+
+    //shorthand
+    if userAge >= 18 || hasParentalConsent {
+        print("You can buy the game")
+    }
+```
+
+- Checking multiple conditions, using enums, and applying logical 'OR'
+```Swift
+    enum TransportOption {
+        case airplane, helicopter, bicycle, car, scooter
+    }
+
+    let transport = TransportOption.airplane
+
+    if transport == .airplane || transport == .helicopter {
+        print("Let's fly!")
+    } else if transport == .bicycle {
+        print("I hope there's a bike path…")
+    } else if transport == .car {
+        print("Time to get stuck in traffic.")
+    } else {
+        print("I'm going to hire a scooter now!")
+    }
+```
+
+## Using Switch Statements to Check Multiple Conditions
+Switch cases work well with enums since it knows all possible cases the enum can have, Swift will help out on ensuring that all cases are checked and there is no duplicate checks <br>
+All switch...cases must be exhaustive; meaning they must all possible values <br>
+Swift will execute the first case that matches the condition and go no further
+
+```Swift
+    enum Weather { case sun, rain, wind, snow, unkown}
+
+    let forecast = Weather.sun
+
+    switch forecase {
+        case .sun:
+            print("It should be a nice day")
+        case .rain:
+            print("Pack an umbrella")
+        case .wind:
+            print("Wear something warm")
+        case .snow:
+            print("School is cancelled.")
+        case .unknown:
+            print("Our forecast generator is broken")
+    }
+```
+
+- Switch...case can have a 'default' value when there is ambiguity <br>
+For example, when switching between Strings, you can't check all possible strings so a default value would be required <br>
+The default case will run if all cases have failed to match
+
+```Swift
+    let place = "Metropolis"
+
+    switch place {
+
+        case "Gotham":
+            print("You're Batman!")
+        case "Mega-City One":
+            print("You're Judge Dredd!")
+        case "Wakanda":
+            print("You're Black Panther!")
+        default:
+            print("Who are you?")
+    }
+```
+
+**Remember: Swift checks its cases in order and runs the first one that matches. If you explicitly want Swift to carry on executing subsequent cases, use 'fallthrough' just before ending the case code block**
+
+## Using the Ternary Conditional Operator for Quick Tests
+The ternary operator lets us check a condition and return one of two values
+
+```Swift
+    //create a constant called 'age' and another called 'canVote' that will store whether you can vote
+    // WTF(What, True, False) syntax
+    let age = 23
+
+    let canVote = age >= 18 ? "Yes" : "No"
+
+    // another example
+    let temp = 24
+    let generalWeather = temp < 16 ? "It's freezing" : "No need for a heavy jacket"
+
+    //another example
+    enum Theme {
+        case light, dark
+    }
+
+    // if Theme is dark, assign "black" to theme otherwise assign "white" to theme
+    let theme = Theme.dark
+
+    let background = theme == .dark ? "black" : "white"
+    print(background)
+
+```
