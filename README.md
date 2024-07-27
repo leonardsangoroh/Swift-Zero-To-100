@@ -624,3 +624,155 @@ Your goal is to loop from 1 through 100, and for each number:
         }
     }
 ```
+
+## Reusing Code with Functions
+Functions enable the reuse of code
+
+```Swift
+    // create function
+    func showWelcome(){
+        print("Welcome to my application!")
+    }
+
+    // call a function
+    showWelcome()
+
+    // parameters in functions
+    // function that prints the multiplication table
+    func printTimesTable(number: Int, end: Int){
+        for i in 1...end {
+            print("\(i) x \(number) is \(i * number)")
+        }
+    }
+
+    // 5 and 20 are arguments
+    printTimesTable(number: 5, end: 20)
+```
+## Returning Values from Functions
+```Swift
+    func rollDice() -> Int {
+        return Int.random(in: 1...6)
+    }
+
+    let result = rollDice()
+
+    // example two
+    func areLettersIdentical(stringOne: String, stringTwo: String) -> Bool {
+        let first = stringOne.sorted()
+        let second = stringTwo.sorted()
+        return first == second
+    }
+
+    // when a function has only one line of code and has promised to return a value,
+    // there's no need to write the 'return' keyword
+    func areLettersIdentical(string1: String, string2: String) -> Bool {
+        string1.sorted() == string2.sorted()
+    }
+
+    func pythagoras(a: Double, b: Double) -> Double {
+        let input = a * a + b * b
+        let root = sqrt(input)
+        return root
+    }
+
+    let c = pythagoras(a: 3, b: 4)
+    print(c)
+
+    // shorten pythagoras()
+    func pythagoras(a: Double, b: Double) -> Double {
+        sqrt(a * a + b * b)
+    }
+```
+
+## Returning Multiple Values from Functions
+
+- Return multiple values using an array
+```Swift
+    func getUser() -> [String] {
+        ["Lee", "Sangoroh"]
+    }
+
+    let user = getUser()
+    print("Name: \(user[0]) \(user[1])")
+```
+
+- Return multiple values using a dictionary
+```Swift
+    func getUser() -> [String: String] {
+        [
+            "fName" : "Lee", 
+            "lName" : "Sangoroh"
+        ]
+    }
+
+    let user = getUser()
+    print("Name: \(user["fName"], default: "Anonymous") \(user["lName"], default: "Anonymous")")
+```
+
+# Tuples
+Like arrays, dictionaries, and sets, tuples lets us store multiple values in a single variable. <br>
+Unlike the rest, tuples have a fixed size and can have a variety of data types
+```Swift
+    func getUser() -> (firstName: String, lastName: String) {
+        (firstName: "Lee", lastName: "Sangoroh")
+    }
+
+    let user = getUser()
+    print("Name: \(user.firstName) \(user.lastName)")
+
+    /* 
+    when returning a tuple from a function, Swift already knows the names you're giving each item in the
+    tuple, so there's no need to repeat them when returning
+    */
+        func getUser() -> (firstName: String, lastName: String) {
+            ("Lee", "Sangoroh")
+        }
+
+    /* 
+    some given tuples may have elements without names
+    you will access them using numerical indices
+    */
+    func getUser() -> (String, String) {
+        ("Lee", "Sangoroh")
+    }
+
+    let user = getUser()
+    print("Name: \(user.0) \(user.1)")
+
+    /*
+    if a function returns a tuple you can pull the tuple apart into individual values
+    */
+    func getUser() -> (firstName: String, lastName: String) {
+        (firstName: "Taylor", lastName: "Swift")
+    }
+
+    let (firstName, lastName) = getUser()
+    print("\(firstName) \(lastName)")
+
+    // if you don't need all values from the tuple
+    let (firstName, _) = getUser()
+    print(firstName)
+```
+
+- Return type is (firstName: String, lastName: String), which is a tuple containing two strings
+- The key advantage for tuples over dictionaries is that we can specify exactly which values will exist and what types they have, whereas dictionaries may or may not contain the values we're asking for
+
+## Customizing Parameter Labels
+When defining parameters for a function we can add two names; one for use where the function is called and one for use inside the function
+```Swift
+    func isUppercase(_ string: String) -> Bool {
+        string == string.uppercased()
+    }
+
+    let string = "HELLO, WORLD"
+    let result = isUppercase(string)
+
+    // a name for calling the function and for using inside the function block
+    func printTimesTables(for number: Int) {
+        for i in 1...12 {
+            print("\(i) x \(number) is \(i * number)")
+        }
+    }
+
+    printTimesTables(for: 5)
+```
