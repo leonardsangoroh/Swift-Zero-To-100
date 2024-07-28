@@ -709,7 +709,7 @@ Functions enable the reuse of code
     print("Name: \(user["fName"], default: "Anonymous") \(user["lName"], default: "Anonymous")")
 ```
 
-# Tuples
+## Tuples
 Like arrays, dictionaries, and sets, tuples lets us store multiple values in a single variable. <br>
 Unlike the rest, tuples have a fixed size and can have a variety of data types
 ```Swift
@@ -775,4 +775,86 @@ When defining parameters for a function we can add two names; one for use where 
     }
 
     printTimesTables(for: 5)
+```
+
+## Providing Default Values for Parameters
+```Swift
+    func printTimesTable(for number: Int, end: Int = 12) {
+        for i in 1...end {
+            print("\(i) x \(number) is \(i * number)")
+        }
+    }
+
+    printTimesTable(for: 5, end: 12)
+    printTimesTable(for: 3)
+```
+
+## Handling Errors in Functions
+
+Handling errors involves three steps; <br> 
+1. Informing Swift of the possible errors that can happen
+2. Writing a function that can flag up errors if they happen
+3. Calling the function, and handling any errors that might happen
+```Swift
+    // define possible errors that might happen i.e. make a new enum that builds on Swift's existing Error type
+    enum PasswordError: Error {
+        case short
+        case obvious
+    }
+    // the enum does not define what the errors mean, it only brings existence
+
+    // write a function that will trigger one of the errors
+    func checkPassword(_ password: String) throws -> String {
+        if password.count < 5 {
+            throw PasswordError.short
+        } 
+        if password == "12345" {
+            throw PasswordError.obvious
+        }
+        if password.count < 8 {
+            return "OK"
+        } else if password.count < 10 {
+            return "Good"
+        } else {
+            return "Excellent"
+        }
+    }
+    /*
+    if a function can throw error(s) without handling them itself, make the function as 'throws' before the return type
+    if marked with 'throws', the function can but must not throw an error
+    */
+
+    // run the function and handle any errors that might happen
+    /*
+    1. Start a block of work that might throw errors using 'do'
+    2. Call one or more throwing functions using 'try'
+    3. Handling any thrown error using catch
+    */
+    let string = "12345"
+    do {
+        let result = try checkPassword(string)
+        print("Rating: \(result)")
+    } catch {
+        print("There was an error")
+    }
+    /*
+    try - must be written before all functions that can throw an error
+    one must be inside a 'do' block when using 'try, and one must have a 'catch' block(s)
+    */
+
+    /* when it comes to catching errors, one must have a catch block (that's able to handle every kind of error)
+    you can also catch specific errors
+    */
+    let string = "12345"
+
+    do {
+        let result = try checkPassword(string)
+        print("Password rating: \(result)")
+    } catch PasswordError.short {
+        print("Please use a longer password.")
+    } catch PasswordError.obvious {
+        print("I have the same combination on my luggage!")
+    } catch {
+        print("There was an error.")
+    }
 ```
