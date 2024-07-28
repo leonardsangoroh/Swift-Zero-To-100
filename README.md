@@ -858,3 +858,43 @@ Handling errors involves three steps; <br>
         print("There was an error.")
     }
 ```
+
+## Checkpoint 4
+The challenge is this: write a function that accepts an integer from 1 through 10,000, and returns the integer square root of that number. That sounds easy, but there are some catches:
+- You can’t use Swift’s built-in sqrt() function or similar – you need to find the square root yourself.
+- If the number is less than 1 or greater than 10,000 you should throw an “out of bounds” error.
+- You should only consider integer square roots – don’t worry about the square root of 3 being 1.732, for example.
+- If you can’t find the square root, throw a “no root” error.
+
+```Swift
+
+    enum Errors: Error {
+        case outOfBounds
+        case noRoot
+
+    }
+
+    func squareRoot(number: Int) throws -> Int {
+        if number > 1 && number <= 10_000 {
+            for i in 1...100 {
+                if i*i == number {
+                    return i
+                } else {
+                    throw Errors.noRoot
+                }
+            }
+        }
+        
+        throw Errors.outOfBounds
+    }
+
+    do {
+        let result = try squareRoot(number: 35)
+    } catch Errors.outOfBounds{
+        print("the number entered should be between 1 and 10_000")
+    } catch Errors.noRoot {
+        print("the number entered has not square root")
+    } catch {
+        print("There is an error")
+    }
+```
