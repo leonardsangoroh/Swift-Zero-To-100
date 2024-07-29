@@ -1114,3 +1114,45 @@ The challenge is this: write a function that accepts an integer from 1 through 1
         print("This is the third work")
     }
 ```
+## Checkpoint 5
+Your job is to:
+- Filter out any numbers that are even
+- Sort the array in ascending order
+- Map them to strings in the format “7 is a lucky number”
+- Print the resulting array, one item per line
+
+```Swift
+    let luckyNumbers = [7,4,38,21,16,15,12,33,31,49]
+
+    func mixedFunction(luckyNumbers: [Int]) -> [String] {
+        
+        let oddNumbers = luckyNumbers.filter { !$0.isMultiple(of: 2)}
+        
+        let sortedNumbers = oddNumbers.sorted()
+        
+        let mappedToString = sortedNumbers.map { "\($0) is a lucky number" }
+        
+        return mappedToString
+    }
+    var mappedToString = mixedFunction(luckyNumbers: luckyNumbers)
+
+    for string in mappedToString {
+        print(string)
+    }
+
+    // chaining methods without using temporary variables
+    let luckyNumbers = [7,4,38,21,16,15,12,33,31,49]
+
+    func mixedFunction(luckyNumbers: [Int]) -> [String] {
+        
+        let mappedToString = luckyNumbers.filter{ !$0.isMultiple(of: 2)}.sorted().map{ "\($0) is a lucky number"}
+        
+        return mappedToString
+    }
+    
+    var mappedToString = mixedFunction(luckyNumbers: luckyNumbers)
+
+    for string in mappedToString {
+        print(string)
+    }
+```
