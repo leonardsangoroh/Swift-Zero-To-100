@@ -898,3 +898,219 @@ The challenge is this: write a function that accepts an integer from 1 through 1
         print("There is an error")
     }
 ```
+
+## Creating & Using Closures
+```Swift
+    // create closure
+    let sayHello = {
+        print("Hi there!")
+    }
+
+    sayHello()
+
+    // parameter-accepting closure(s)
+    let sayHi = { (name: String) -> String in
+        // must not use 'return' keyword since its a single line
+        "Hi \(name)"
+    }
+    /*
+     no parameter name is required since when the closure is assigned to a variable,
+     it acquires the type (String)-> String
+     and not type (name: String) -> String
+     that is just how it is :)
+
+     this works the same way as creating a copy of a function
+     it assumes a different data type and hence no need to mention the parameter name while passing the argument
+    */
+    sayHi("Lee")
+```
+
+## Function Types (Yes, functions have types Similar to Int, Double)
+```Swift
+    func greetUser() {
+        print("Hello")
+    }
+
+    var greetCopy = greetUser
+    //type annotation for greetCopy
+    /*
+    - empty parentheses shows the function takes no arguments
+    - the arrow prompts the declaration of a return type
+    - Void means 'nothing'; meaning the function returns nothing
+    */
+    var greet: () -> Void = greetUser
+
+    // every function's type depends on the data it receives and returns
+
+    func getUserData(for id: Int) -> String {
+        if id == 1989 {
+            return "Taylor Swift"
+        } else {
+            return "Anonymous"
+        }
+    }
+
+    let data: (Int) -> String = getUserData
+    let user = data(1989)
+    print(user)
+```
+## Passing Functions into other Functions
+```Swift
+    let fullName = ["Leonard", "Lee", "Sangoroh"]
+    //will sort alphabetically
+    let sortedName = fullName.sorted()
+    print(sortedName)
+
+    // sorted allows us to pass in a custom sorting function
+    //provided it takes in two strings, and returns a boolean
+    // if true first string will be sorted before second
+    //if false, second string will be sorted before first
+
+    //sort function to put firstName as the first in the array
+    func firstNameFirstSorted(name1: String, name2: String) -> Bool {
+        if name1 == "Lee" {
+            return true
+        } else if name2 == "Lee" {
+            return false
+        }
+
+        return name1 < name2
+    }
+
+    let firstNameFirst = fullName.sorted(by: firstNameFirstSorted)
+    print(firstNameFirst)
+
+    /*
+    instead of passing a function, you can just write the logic directly into the sorted()
+    using a closure
+    */
+```
+
+## Passing a Closure into a Function
+```Swift
+    /*
+    instead of passing a function, you can just write the logic directly into the sorted()
+    using a closure
+    */
+    let firstNameFirst = fullName.sorted(by: { (nameOne: String, nameTwo: String) -> Bool in
+    if nameOne == "Lee" {
+        return true
+    } esle if nameTwo == "Lee" {
+        return false
+    }
+
+    return nameOne < nameTwo
+
+    })
+```
+
+## Trailing Closure Syntax and Shorthand Syntax
+- We will practically do this by using the section above ('Passing a Closure into a Function') for reference
+```Swift
+    /*
+    the function passed into .sorted() must have two string parameters and return a boolean
+
+    so there's no need to specify the types of the two parameters because they must be strings
+    and no need to specify the return type since it must be boolean
+
+    //code change
+    */
+     let firstNameFirst = fullName.sorted(by: { (nameOne, nameTwo) in
+    if nameOne == "Lee" {
+        return true
+    } esle if nameTwo == "Lee" {
+        return false
+    }
+
+    return nameOne < nameTwo
+
+    })
+
+    // trailing closure syntax
+    // allowed when one function accepts another
+    let firstNameFirst = fullName.sorted { (nameOne, nameTwo) in
+        if nameOne == "Lee" {
+            return true
+        } esle if nameTwo == "Lee" {
+            return false
+        }
+
+        return nameOne < nameTwo
+    }
+
+    // shorthand syntax
+    // swift can automatically provide names for our parameters
+    let firstNameFirst = fullName.sorted {
+        if $0 == "Lee" {
+            return true
+        } esle if $1 == "Lee" {
+            return false
+        }
+
+        return $1 < $2
+    }
+```
+## Other Closure Examples
+- The filter() function lets us run some code on every item in the array, and will send back a new array containing every item that returns true for the function. So, we could find all team players whose name begins with T like this:
+```Swift
+    let allNames = ["Lee", "Leonard", "Sangoroh"]
+    let lOnly = allNames.filter { $0.hasPrefix("L")}
+```
+
+- The map() function lets us transform every item in the array using some code of our choice, and sends back a new array of all the transformed items
+```Swift
+    let uppercasedName = allNames.map { $0.uppercased() }
+    print(uppercasedName)
+```
+
+## Accepting Functions as Parameters
+```Swift
+    // function accepting a function/closure
+    func makeArray (size: Int, using generator: () -> Int) -> [Int] {
+        var numbers = [Int]()
+
+        for _ in 0..<size {
+            let newNumber = generator()
+            numbers.append(newNumber)
+        }
+
+        return numbers
+    }
+
+    // calling the function and passing a closure using trailing syntax
+    let rolls = makeArray(size: 50) {
+        Int.random(in: 1...20)
+    }
+
+    print(rolls)
+
+    // calling a function and passing a function
+    func generateNumber() -> Int {
+        Int.random(in: 1...20)
+    }
+
+    let newRolls = makeArray(size: 50, using: generateNumber)
+    print(newRolls)
+```
+
+## A Function with Three Function Parameters
+```Swift
+    func doImportantWork(first: () -> Void, second: () -> Void, third: () -> Void) {
+        print("About to start first work")
+        first()
+        print("About to start second work")
+        second()
+        print("About to start third work")
+        third()
+        print("Done!")
+    }
+
+    // calling the function
+    doImportantWork {
+        print("This is the first work")
+    } second: {
+        print("This is the second work")
+    } third: {
+        print("This is the third work")
+    }
+```
