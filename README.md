@@ -491,7 +491,7 @@ The ternary operator lets us check a condition and return one of two values
     print(background)
 ```
 
-# Using a For Loop to Repeat Work
+## Using a For Loop to Repeat Work
 
 - Print each Item in an Array
 ```Swift
@@ -1149,10 +1149,164 @@ Your job is to:
         
         return mappedToString
     }
-    
+
     var mappedToString = mixedFunction(luckyNumbers: luckyNumbers)
 
     for string in mappedToString {
         print(string)
+    }
+```
+## Creating Structs
+- Swift's structs let us creat our own custom, complex data types, complete with their own variables, and functions
+- Variables & constants that belong to structs are called properties
+- Functions that belong to structs are called methods
+- An instance of a struct is created when a constant or variable is created from the struct
+
+```Swift
+    // create new type called album with two string constants plus an integer constant and a function
+    struct Album {
+        let title: String
+        let artist: String
+        let year: Int
+
+        func printSummary() {
+            print("\(title) \(year) by \(artist)")
+        }
+    }
+
+    let red = Album(title: "Red", artist: "TS", year: 2012)
+    let wings = Album(title: "Wings", artist: "BTS", year: 2016)
+
+    print(red.title)
+    print(wings.artist)
+
+    red.printSummary()
+
+    // when having changing values in a struct, the variable created from the instance must be a 'var'
+    // in case a function is changing a variable, it must start with the keyword 'mutating'
+    struct Employee {
+        let name: String
+        var vacationRemaining: Int = 14
+
+        mutating func takeVacation(days: Int) {
+            if vacationRemaining > days {
+                vacationRemaining -= days
+                print("I'm going on vacation!")
+                print("Days remaining: \(vacationRemaining)")
+            } else {
+                print("Oops! There aren't enough days remaining.")
+            }
+        }
+    }
+
+    var archer = Employee(name: "Lee Archer", vacationRemider: 14)
+    var kane = Employee(name: "Harry Kane")
+
+    archer.takeVacation(days: 4)
+    print(archer.vacationRemaining)
+```
+
+## Compute Property Values Dynamically
+
+A struct can have two types of variables; <br>
+    - stored property - variable that holds a piece of data inside an instance of a struct <br>
+    - computed property - calculates the value of the property dynamically every time its accessed <br>
+
+```Swift
+    struct Employee {
+        let name: String
+        var vacationAllocated = 14
+        var vacationTaken = 0
+        // vacationRemaining is calculated by subtracting how much vacation they have taken from how much
+        // vacation they were allocated
+        // it is not assigned but rather calculated
+        var vacationRemaining: Int {
+            vacationAllocated - vacationTaken
+        }
+    }
+
+    var archer = Employee(name: "Sterling Archer", vacationAllocated: 14)
+    archer.vacationTaken += 4
+    // reading from vacationRemaining
+    print(archer.vacationRemaining)
+    archer.vacationTaken += 4
+    // reading from vacationRemaining
+    print(archer.vacationRemaining)
+
+    
+    // reading from & writing to computed properties
+    var vacationRemaining: Int {
+        get {
+            vacationAllocated - vacationTaken
+        }
+
+        set {
+            // newValue is automatically provided by Swift, and stores whatever value the user
+            // was trying to assign to the property
+            vacationAllocated = vacationTaken + newValue
+        }
+    }
+
+    var archer = Employee(name: "Sterling Archer", vacationAllocated: 14)
+    archer.vacationTaken += 4
+    archer.vacationRemaining = 5
+    print(archer.vacationAllocated)
+```
+
+## Taking Action when a Property Changes
+- Swift enables us to set property observers, which are special code blocks that run when properties change
+- There are of two forms; didSet & willSet
+- didSet; runs when the property just changed
+- willSet; runs before the property changes
+
+```Swift
+    struct Game {
+        var score = 0 {
+            didSet {
+                print("Score changed to \(score)")
+            }
+        }
+    }
+
+    var game = Game()
+    game.score += 10
+    game.score -= 3
+    game.score += 1
+
+    struct App {
+        var contacts = [String]() {
+            willSet {
+                print("Current value is: \(contacts)")
+                print("New value will be: \(newValue)")
+            }
+
+            didSet {
+                print("There are now \(contacts.count) contacts.")
+                print("Old value was \(oldValue)")
+            }
+        }
+    }
+
+    var app = App()
+    app.contacts.append("Adrian E")
+    app.contacts.append("Allen W")
+    app.contacts.append("Ish S")
+```
+
+## Creating Custom Initializers
+- Initializers are specialized methods designed to prepare a new struct instance to be used
+- We can create our own struct as long as we ensure all properties have a value by the time the initializer ends
+```Swift
+    // our own initializer
+    // once you create your custom initializer, Swift assumes that the default one
+    // is no longer needed
+    struct Player {
+        let name: String
+        let number: Int
+
+        init (name: String, number: Int) {
+            self.name = name
+            self.number = number
+        }
     }
 ```
