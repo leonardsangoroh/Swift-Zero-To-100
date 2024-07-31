@@ -1310,3 +1310,91 @@ A struct can have two types of variables; <br>
         }
     }
 ```
+## Limit Access to Internal Data using Access Control
+- By default, Swift's structs let us access their properties and methods freely
+- Sometimes, you want to hide some data from external access
+
+```Swift
+    struct BackAccount {
+        // make funds variable inaccessible outside the struct to prevent people
+        // from adjusting their real balance
+        private var funds = 0
+
+        mutating func deposit(amount: Int) {
+            funds += amount
+        }
+
+        mutating func withdraw(amount: Int) -> Bool {
+            if funds >= amount {
+                funds -= amount
+                return true
+            } else {
+                return false
+            }
+        }
+
+        var account = BankAccount()
+        account.deposit(amount: 100)
+        let success = account.withdraw(amount: 200)
+
+        if success {
+            print("Withdrew money successfully")
+        } else {
+            print("Failed to get the money")
+        }
+    }
+```
+Swift provides us with a couple of access controls; <br>
+- private: Don't let anything outside the struct use this
+- fileprivate: Don't let anything outside the current file use this
+- public: Let anyone, anywhere use this
+- private(set): let anyone read this property, but only let methods inside the struct write to it
+
+## Static Properties & Methods
+- Each instance of a struct has its own unique copy of properties and methods
+- Sometimes, you want to add a property or method to the struct directly and not its instance, which enables you to use them directly
+- Uses of static properties and methods include; <br>
+    a. creating example data <br>
+    b. storing fixed data
+
+- No instance of School is created, its properties and methods are accessed directly
+- 'mutating' is also not needed; it's only needed with a regular struct function when an instance of struct was created as a constant
+```Swift
+    struct School {
+        static var studentCount = 0
+
+        static func add(student: String) {
+            print("\(student) joined the school")
+            studentCount += 1
+        }
+    }
+
+    School.add(student: "Lee Sangoroh")
+    print(School.studentCount)
+```
+## Mixing Static & Non-Static Properties and Methods
+- Rule One: You can't refer non-static properties and methods from static properties or methods
+- Rule Two: To access static code from non-static code, use your type's name e.g. School.studentCount, or use Self to refer to the current type
+
+**Difference btw self & Self** <br>
+- self: refers to the current value of the struct
+- Self: refers to the current type
+
+```Swift
+    // where structs are used
+    
+    // storing shared constant values
+    struct AppData {
+        static let version = "1.0.0 beta"
+        static let saveFileName = "settings.json"
+        static let homeURL = "https://www.mumamaler.com"
+    }
+
+    // generating examples
+    struct Employee {
+        let username: String
+        let password: String
+
+        static let example = Employee(username: "cfederighi", password: "hairforceone")
+    }
+```
