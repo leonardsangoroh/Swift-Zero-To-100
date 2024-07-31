@@ -1398,3 +1398,30 @@ Swift provides us with a couple of access controls; <br>
         static let example = Employee(username: "cfederighi", password: "hairforceone")
     }
 ```
+
+## Checkpoint 6
+ Create a struct to store information about a car, including its model, number of seats, and current gear, then add a method to change gears up or down. Have a think about variables and access control: what data should be a variable rather than a constant, and what data should be exposed publicly? Should the gear-changing method validate its input somehow?
+
+```Swift
+    struct Car {
+        let carModel: String
+        let numberOfSeats: Int
+        var currentGear: Int
+        
+        mutating func gearUp(){
+            if currentGear < 10 {
+                currentGear += 1
+            }
+        }
+        mutating func gearDown(){
+            if currentGear > 1 {
+                currentGear -= 1
+            }
+        }
+    }
+
+    var toyota = Car(carModel: "Toyota", numberOfSeats: 5, currentGear: 3)
+    print(toyota.currentGear)
+    toyota.gearUp()
+    print(toyota.currentGear)
+```
