@@ -1157,7 +1157,7 @@ Your job is to:
     }
 ```
 ## Creating Structs
-- Swift's structs let us creat our own custom, complex data types, complete with their own variables, and functions
+- Swift's structs let us create our own custom, complex data types, complete with their own variables, and functions
 - Variables & constants that belong to structs are called properties
 - Functions that belong to structs are called methods
 - An instance of a struct is created when a constant or variable is created from the struct
@@ -1425,3 +1425,166 @@ Swift provides us with a couple of access controls; <br>
     toyota.gearUp()
     print(toyota.currentGear)
 ```
+
+## Creating Classes
+Apart from structs, Classes are also another way of creating custom data types <br>
+
+**Differences between classes & structs** <br>
+1. You can make one class build upon functionality in another class, gaining all its properties and methods as a starting point. You can also selectively override some methods.
+2. There are no automatically generated memberwise initializers for classes. Either write you own, or assign default values
+3. When you copy an instance of a class, both copies share the same data - if you change one copy, the other one also changes <br>
+Why? In Swift, class are reference types; meaning when you create an instance of a class and then create a copy of that instance, both the original instance and the copy actually reference the same underlying object in memory. They both point to the same memory location.
+**Structs** on the other hand are value types; meaning each instance of a struct has its own unique copy of the data. When you assign a struct instance to another variable, or pass it to a function, Swift creates a copy of that instance.
+4. When the final copy of a class instance is destroyed, Swift can optionally run a special function called 'deinitializer'
+5. Even if you make a class constant, you can still change its properties as long as they are variables
+
+```Swift
+    class Game {
+        var score = 0 {
+            didSet {
+                print("Score is now \(score)")
+            }
+        }
+    }
+
+    var newGame = Game()
+    newGame.score += 10
+```
+
+## Inheriting from a Class
+When a class inherits functionality from another, Swift gives the child class access to the properties and methods of the parent class, allowing us to make small changes to customize the way the new class behaves
+```Swift
+    class Employee {
+        let hours: Int
+
+        init (hours: Int) {
+            self.hours = hours
+        }
+
+        func printSummary() {
+            print("I work \(hours) hours a day.")
+        }
+    }
+
+    class Developer: Employee {
+        func work() {
+            print("I'm writing code for \(hours) hours")
+        }
+    }
+
+    class Manager: Employee {
+        func work() {
+            print("I'm going to meetings for \(hours) hours")
+        }
+
+        // changing a method you inherit (using override)
+        override func printSummary() {
+            print("I am the boss, I decide how long I will work for")
+        }
+    }
+
+    // the child classes can refer directly to 'hours'
+    let lee = Developer(hours: 18)
+    lee.work() // I'm writing code for 18 hours
+    let sangoroh = Manager(hours: 6)
+    sangoroh.work() // I'm going to meetins for 6 hours
+    sangoroh.printSummary() // I work 6 hours a day
+```
+- If you want your class not to support any inheritance, mark it using 'final' keyword
+
+## Adding Initializers for Classes
+- If a child class has any custom initializers, it must always call the parent's initializer after it has finished setting up its own properties, if it has any
+
+```Swift
+    class Vehicle {
+        let isElectric: Bool
+
+        init(isElectric: Bool) {
+            self.isElectric = isElectric
+        }
+    }
+
+    class Car: Vehicle {
+        let isConvertible: Bool
+
+        init(isConvertible: Bool, isElectric: Bool) {
+            self.isConvertible = isConvertible
+            super.init(isElectric: isElectric)
+        }
+    }
+
+    let tesla = Car(isConvertible: true, isConvertible: false)
+```
+
+**NB:** If a subclass doesn't have any of its own initializers, it automatically inherits the initializers of its parents class.
+
+## Copying Classes
+- In Swift, all copies of a class instance share the same data
+```Swift
+    class User {
+        var username = "leonardsangoroh"
+    }
+
+    var userOne = User() //leonardsangoroh
+    var userTwo = userOne // leonardsangoroh
+
+    userTwo = "leonard"
+
+    // both userOne and userTwo change to 'leonard'
+    print(user1.username)  
+    print(user2.username)
+```
+
+- If you want to create a unique copy of a class instance (deep copy), you need to handle creating a new instance and copy acros all your data safely
+```Swift
+    class User {
+        var username = "Anonymous"
+
+        func copy() -> User {
+            let user = User()
+            user.username = username
+            return user
+        }
+    }
+
+    // now we can safely call copy() to get an object with the same sarting data, but any future changes won't impact the original
+    var anonymous = User(username: "lee")
+    var lee = anonymous.copy
+```
+## De-initializing a Class
+Swift's classes can optionally be given a de-initializer
+- Deinitializers don't use the func keyword
+- They can't take parameters or return data
+- They are automatically called when the final copy of a class instance is destroyed
+- They are automatically handled by the system
+- Structs don't have deinitializers, because you can't copy them
+
+```Swift
+    class User {
+        let id: Int
+
+        init(id: Int) {
+            self.id = id
+            print("User \(id): I'm alive!")
+        }
+
+        deinit {
+            print("User \(id): I'm dead!")
+        }
+    }
+
+    // creating & destroying instances
+    // if we create a User instance inside a loop, it will be destroyes when each loop iteration finishes
+    for i in 1...3 {
+        let user = User(id: i)
+        print("User \(user.id): I'm in control!")
+    }
+```
+
+## Working with Variables inside Classes
+Four options for variables and instance of a class;
+
+- Constant instance, constant property – a signpost that always points to the same user, who always has the same name.
+- Constant instance, variable property – a signpost that always points to the same user, but their name can change.
+- Variable instance, constant property – a signpost that can point to different users, but their names never change.
+- Variable instance, variable property – a signpost that can point to different users, and those users can also change their names.
