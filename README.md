@@ -1658,3 +1658,92 @@ But there’s more:
         }
     }
 ```
+
+## Protocols & Extensions
+Protocols are like agreements in Swift; they let us define what kinds of functionality we expect a data type to support, and Swift ensures that the rest of our code follows those rules <br>
+Protocols let us define properties and methods that we want to use without implementing those properties and methods.<br>
+Protocols act as blueprints
+```Swift
+    // this is a new type
+    protocol Vehicle {
+        // if need be, you can mark methods as throwing or mutating
+        func estimateTime(for distance: Int) -> Int
+        func travel(distance: Int)
+    }
+
+    // we can create structs, classes, or enums that conform to the protocol
+
+    // car struct that conforms to Vehicle Protocol
+    struct Car: Vehicle {
+        func estimateTime(for distance: Int) -> Int {
+            distance/50
+        }
+
+        func travel(distance: Int) {
+            print("I'm driving \(distance)km")
+        }
+
+        // not needed to conform to Vehicle protocol
+        func openSunroof() {
+            print("It's a nice day!")
+        }
+
+    }
+
+    /*
+    Swift knows that any type conforming to Vehicle must implement both estimateTime() and travel() methods,
+    and so it lets us use Vehicle as the type of our parameter rather than car
+    Now the function can be called with any type of data, as long as that type
+    conforms to Vehicle protocol e.g. Car, Bus, Train, Plane etc.
+    */
+    //func commute(distance: Int, using vehicle: Car) {
+    func commute(distance: Int, using vehicle: Vehicle) {    
+        if vehicle.estimateTime(for: distance) > 100 {
+            print("That's too slow!")
+        } else {
+            vehicle.travel(distance: distance)
+        }
+    }
+
+    let car = Car()
+    commute(distance: 100, using: car)
+
+    struct Bicycle: Vehicle {
+        func estimateTime(for distance: Int) -> Int {
+            distance / 10
+        }
+
+        func travel(distance: Int) {
+            print("I'm cycling \(distance)km.")
+        }
+    }
+
+    let bike = Bicycle()
+    commute(distance: 50, using: bike)
+
+```
+
+## Write Protocols to Describe Properties
+- Type annotation is required for properties in protocol(s), since we can't provide a default value in a protocol, just as protocols can't provide implementations for methods.
+```Swift
+    protocol Vehicle {
+        // a string called name which must be readable
+        // Meaning it could be a constant of a computed property with a getter
+        var name: String { get }
+        // an integer called currentPassengers that must be read-write
+        // could be a variable, or a computed property with a getter and setter
+        var currentPassengers: Int { get set }
+    }
+```
+- So now our protocol requires two methods and two properties, meaning that all conforming types must implement those four things in order for our code to work. This in turn means Swift knows for sure that functionality is present, so we can write code relying on it.
+```Swift
+    func getTravelEstimates(using vehicles: [Vehicle], distance: Int) {
+        for vehicle in vehicles {
+            let estimate = vehicle.estimateTime(for: distance)
+            print("\(vehicle.name): \(estimate) hours to travel \(distance)km")
+        }
+    }
+
+    getTravelEstimates(using: [car, bike], distance: 150)
+
+```
