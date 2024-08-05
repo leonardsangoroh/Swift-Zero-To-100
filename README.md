@@ -3,6 +3,7 @@ Welcome to the "Introduction to Swift" repository! This repository aims to take 
 Whether you're new to programming or an experienced developer, this guide will help you understand and get started with Swift.
 
 # Contents
+- [Want to Contribute?](#contributing)
 - [Constants and Variables](#constants-and-variables)
 - [Strings](#strings)
 - [Storing Whole Numbers](#storing-whole-numbers)
@@ -52,6 +53,7 @@ Whether you're new to programming or an experienced developer, this guide will h
 - [Optional try](#optional-try)
 - [Failable Initializers](#failable-initializers)
 - [Typecasting](#typecasting)
+- [Acknowledgement](#acknowledgement)
 
 ## Constants and Variables
 - Variable: It's value can vary <br>
@@ -2138,3 +2140,19 @@ Your protocol should require the following:
         }
     }
 ```
+## Contributing
+Contributions are welcome! If you have any improvements or suggestions, feel free to open an issue or submit a pull request to the **staging** branch of the repository. <br>
+Improvements or suggestions may include but are not limited to;
+1. Grammatical errors
+2. Wrong Swift syntax
+3. Inclusion of a Swift Concept
+4. Suggestion to better explain a concept
+5. Better organization of the .md file
+6. The list is endless!
+
+## Show your support
+Give a ⭐️ if you would like to revisit this content! <br>
+[Buy me Coffee](https://buymeacoffee.com/leonardsangoroh)
+
+## Acknowledgments
+- Pual Hudson - this document is made in reference to Paul's free online course: 100 days of Swift
