@@ -1747,3 +1747,102 @@ Protocols act as blueprints
     getTravelEstimates(using: [car, bike], distance: 150)
 
 ```
+
+## Protocol Inheritence
+- One protocol can inherit from multiple protocols.
+- Unlike classes, you can inherit from multiple protocols at the same time before you add your own customization.
+```Swift
+    protocol Payable {
+        func calculateWages() -> Int
+    }
+
+    protocol NeedsTraining {
+        func study()
+    }
+
+    protocol HasVacation {
+        func takeVacation(days: Int)
+    }
+
+    // employee protocol brings together all the three protocols
+    // we can make new types conform to the single protocol rather than the threes
+    protocol Employee: Payable, NeedsTraining, HasVacation { }
+```
+
+## Extensions
+- Extensions allow us to add methods(functionality) to existing types
+```Swift
+    // add extension to Int type, add a squared() methods to return current number squared
+    extension Int {
+        func squared() -> Int {
+            return self * self
+        }
+    }
+
+    let number = 23
+    number.squared()
+```
+
+- Swift does not allow adding of stored properties in extensions, necessitating the use of computed properties
+```Swift
+    extension Int {
+        var isEven: Bool {
+            return self % 2 == 0
+        }
+    }
+```
+
+## Protocol Extensions
+- Protocols: let us describe what properties & methods something should have, but don't provide implementation
+- Extensions: let us provide implementation of methods, but only affect one data type i.e. one can't add the method to lots of types at the same time
+- Protocol Extensions; are like regular extensions, but instead of extending a specific type like Int, we extend a whole protocol so that all conforming types get the changes
+```Swift
+    // both arrays & sets conform to Swift's collection protocol
+    let sangorohs = ["Lee", "Rachael", "Roy"]
+    let operations = Set(["addition", "subtraction"])
+
+    // extend collection instead of arrays or sets
+    extension Collection {
+        func summarize() {
+            print("There are \(count) of us: ")
+
+            for name in self {
+                print(name)
+            }
+        }
+    }
+
+    //both array and set will have the method
+    sangorohs.summarizee()
+    operations.summarize()
+```
+
+## Protocol-Oriented Programming
+- Protocol extensions can provide default implementations for our own protocol methods, hence making it easy for a type to conform to a protocol
+- We can extend a protocol to add method implementations, meaning any type conforming to that protocol get those  methods.
+```Swift
+    //protocol
+    protocol Identifiable {
+        var id: String { get set }
+        func identify()
+    }
+
+    // you can make all conforming types implement identity() individually
+    // but protocol extensions allow you to provide a default
+    extension Identifiable {
+        func identify() {
+            print("My ID is \(id).")
+        }
+    }
+
+    // creating a type that conforms to Identifiable
+    struct User: Identifiable {
+        var id: String
+    }
+
+    let lee = User(id: "Lee")
+    lee.identify()
+```
+
+## When are Protocol Extensions useful?
+- Used to add functionality directly to protocols, meaning there's no need to copy that functionality to all structs and classes conforming to the protocol
