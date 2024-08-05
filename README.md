@@ -1891,3 +1891,197 @@ Your protocol should require the following:
     let houseOne = House(numberOfRooms: 5, cost: 1_000_000, agentName: "Lee Sangoroh")
     print(houseOne.printSalesSummary())
 ```
+
+## Optionals
+- An optional variable might have a value or might not; it might literally be missing, which is 'nil' in Swift
+```Swift
+    //make a type optional by adding ? after it
+    var age: Int? = nil
+    // assign a value
+    age = 23
+```
+## Unwrapping optionals
+```Swift
+    // if...let
+    if let unwrapped = age {
+        print("I am \(age)years old") 
+    } else {
+        print("Missing name.")
+    }
+
+    // unwrapping with guard
+    // guard let will unwrap an optional
+    // but if it finds nil inside it expects you to exit the function loop, or condition you used it in
+
+    // guard let lets your unwrapped variable be used after the guard code
+    func greet (_ name: String?) {
+        guard let unwrapped = name else {
+            print("No name provided")
+            return
+        }
+
+        print("Hello, \(unwrapped)!")
+    }
+```
+
+## Force Unwrapping
+- Force unwrapping converts an optional to a non-optional
+- e.g. Converting a String to an Integer leads to the destination variable being an optional because the converted string could be a word hence not convertinble to an Integer
+- However, if you're sure it is an integer, you can force unwrap
+- If forcefully unwrapped and found to be nil, the entire code crashes
+```Swift
+    let str = "7"
+    //optional
+    let num = Int(str)
+
+    // non-optional
+    let num = Int(str)!
+```
+
+## Implicitly Unwrapped Optionals
+- Regular optional, just that they don't need to be unwrapped to be used
+- They exist because sometimes a variable will start life as nil, but will always have a value before you need to use it
+```Swift
+    let age: Int! = nil
+```
+
+## Nil Coalescing
+- It ensures that a variable has a value
+- The nil coalescing operator unwraps an optional and returns the value inside if there's one. If the optional was nil, a default value is used instead
+
+```Swift
+    func username(for id: Int) -> String? {
+        if id == 1 {
+            return "Lee Sangoroh"
+        } else {
+            return nil
+        }
+    }
+
+    // nil coalescing
+    let mainUser = username(for: 5) ?? "Anonymous"
+    print(mainUser) //prints Anonymous
+```
+
+## Optional Chaining
+- Swift gives a shortcut to access things like a.b.c and b is an optional. 
+- You can write a question mark after it to enable optional chaining (a.b?.c)
+- Swift checks whether b has a value, if it's nil, the rest of the line is ignored but if it has a value it will be unwrapped and execution will continue
+```Swift
+    let names = ["Lee", "Leonard", "Sangoroh"]
+    // if first item in array exists, execution continues and fName will contain its uppercased version
+    // if first item is not there, execution ends and fName is assigned nil
+    let fName = names.first?.uppercased()
+```
+
+## Optional try
+
+- Previous do...try...catch
+```Swift
+    enum PasswordError: Error {
+        case obvious
+    }
+
+    func checkPassword(_ password: String) throws -> Bool {
+        if password == "password" {
+            throw PasswordError.obvious
+        }
+
+        return true
+    }
+
+    do {
+        try checkPassword("password")
+        print("That password is good!")
+    } catch {
+        print("You can't use that password.")
+    }
+```
+- There are two alternatives to try; try? and try!
+- The first is try?, changes throwing functions into functions that return an optional.
+- If the function throws an error you'll be sent nil as the result, otherwise you'll get the return value wrapped as an optional
+```Swift
+    if let result = try? checkPassword("password") {
+        print("Result has \(result)")
+    } else {
+        print("D'oh.")
+    }
+```
+
+- The second is try!, which is used when you know the function will not fail. If the function throws an error then all the code crashes
+```Swift
+    try! checkPassword("Leonard")
+    print("Okay")
+```
+
+## Failable Initializers
+
+- In Swift, a failable initializer is an initializer that can return nil, indicating that the initialization of the object has failed. This is useful when you need to perform some validation or checks during the initialization process, and there's a possibility that the initialization might not succeed.
+
+- You define a failable initializer by placing a question mark after the init keyword: init?. If the initialization fails, you return nil.
+```Swift
+    struct Person {
+        var name: String
+        var age: Int
+
+        init?(name: String, age: Int) {
+            if age < 0 {
+                // If the age is negative, return nil to indicate initialization failure
+                return nil
+            }
+            self.name = name
+            self.age = age
+        }
+    }
+
+    if let person = Person(name: "John Doe", age: 30) {
+        print("Person was created successfully: \(person.name), \(person.age) years old")
+    } else {
+        print("Failed to create person")
+    }
+
+    if let person = Person(name: "Jane Doe", age: -5) {
+        print("Person was created successfully: \(person.name), \(person.age) years old")
+    } else {
+        print("Failed to create person")
+    }
+
+```
+
+- In this example, the Person struct has a failable initializer. It checks if the age is less than 0, and if so, it returns nil, indicating that the initialization has failed. When we try to create a Person with a negative age, the initializer fails, and we get nil.
+
+- Failable initializers are useful when dealing with potentially invalid data or when initializing objects that depend on certain conditions being met. They provide a way to safely handle initialization failures without causing runtime errors.
+
+## Typecasting
+- Used for filtering sometimes
+```Swift
+    class Animal {
+
+    }
+
+    class Fish: Animal {
+
+    }
+
+    class Dog: Animal {
+        func makeNoise() {
+            print("Woof!")
+        }
+    }
+
+    //array of fish and dogs
+    let pets = [Fish(), Dog(), Fish(), Dog()]
+
+    //both Fish & Dog inherit from Animal class, hence type inference is used to make pets an array of Animal
+
+    // if we want to loop over pets and ask all dogs to bark
+    // we need to perform a typecase: Swift will check whether each pet is a Dog object
+    // if it is we can call makeNoise()
+    // we will need the keyword as?, which returns an optional; it will be nil if the typecast fails, or a converted type otherwise
+
+    for pet in pets {
+        if let dog = pet as? Dog {
+            dog.makeNoise()
+        }
+    }
+```
