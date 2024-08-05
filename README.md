@@ -1846,3 +1846,48 @@ Protocols act as blueprints
 
 ## When are Protocol Extensions useful?
 - Used to add functionality directly to protocols, meaning there's no need to copy that functionality to all structs and classes conforming to the protocol
+
+## Checkpoint 8
+Make a protocol that describes a building, adding various properties and methods, then create two structs, House and Office, that conform to it. <br>
+Your protocol should require the following:
+
+- A property storing how many rooms it has.
+- A property storing the cost as an integer (e.g. 500,000 for a building costing $500,000.)
+- A property storing the name of the estate agent responsible for selling the building.
+- A method for printing the sales summary of the building, describing what it is along with its other properties.
+```Swift 
+    protocol Building {
+        var numberOfRooms: Int { get }
+        var cost: Int { get set }
+        var agentName: String { get }
+        
+        func printSalesSummary() -> Void
+        
+    }
+
+    extension Building {
+        
+        func printSalesSummary() -> Void {
+            print("""
+                \(numberOfRooms)
+                \(cost)
+                \(agentName)
+                """)
+        }
+    }
+
+    struct House: Building {
+        var numberOfRooms: Int
+        var cost: Int
+        var agentName: String
+    }
+
+    struct Office: Building {
+        var numberOfRooms: Int
+        var cost: Int
+        var agentName: String
+    }
+
+    let houseOne = House(numberOfRooms: 5, cost: 1_000_000, agentName: "Lee Sangoroh")
+    print(houseOne.printSalesSummary())
+```
