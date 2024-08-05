@@ -1,6 +1,59 @@
 # Introduction to Swift
+Welcome to the "Introduction to Swift" repository! This repository aims to take you through the basics of Swift, Apple's programming language for iOS, macOS, watchOS, and tvOS development. <br>
+Whether you're new to programming or an experienced developer, this guide will help you understand and get started with Swift.
 
-## Constants & Variables
+# Contents
+- [Constants and Variables](#constants-and-variables)
+- [Strings](#strings)
+- [Storing Whole Numbers](#storing-whole-numbers)
+- [Arithmetic Operators](#arithmetic-operators)
+- [Storing Decimal Numbers](#storing-decimal-numbers)
+- [Booleans](#booleans)
+- [Store Ordered Data in Arrays](#store-ordered-data-in-arrays)
+- [Storing and Finding Data in Dictionaries](#storing-and-finding-data-in-dictionaries)
+- [Sets](#using-sets-for-fast-data-lookup)
+- [Creating and Using Enums](#creating-and-using-enums-(enumerations))
+- [Using Type Annotations](#using-type-annotations)
+- [if...else](#check-whether-condition-is-true-or-false)
+- [switch...case](#using-switch-statements-to-check-multiple-conditions)
+- [Using Ternary Conditional Operator](#using-the-ternary-conditional-operator-for-quick-tests)
+- [Using a For Loop](#using-a-for-loop-to-repeat-work)
+- [Using a While Loop](#using-a-while-loop-to-repeat-work)
+- [Skipping Loop Item with Break and Continue](#skipping-loop-items-with-break-and-continue)
+- [Functions](#reusing-code-with-functions)
+- [Tuples](#tuples)
+- [Customizing Parameter Labels](#customizing-parameter-labels)
+- [Providing Default Values for Parameters](#providing-default-values-for-parameters)
+- [Handling Errors](#handling-errors-in-functions)
+- [Creating and Using Closures](#creating-and-using-closures)
+- [Function Types](#function-types-(yes,-functions-have-types-similar-to-int,-double))
+- [Passing Functions into Functions](#passing-functions-into-other-functions)
+- [Passing a Closure into a function](#passing-a-closure-into-a-function)
+- [Trailing Closure Syntax and Shorthand Syntax](#trailing-closure-syntax-and-shorthand-syntax)
+- [Accepting Functions as Parameters](#accepting-functions-as-parameters)
+- [Creating Structs](#creating-structs)
+- [Compute Property Values Dynamically](#compute-property-values-dynamically)
+- [Taking Action when a Property Changes](#taking-action-when-a-property-changes)
+- [Creating a Custom Initializer](#creating-custom-initializers)
+- [Access Control](#limit-access-to-internal-data-using-access-control)
+- [Static Properties and Methods](#static-properties-and-methods)
+- [Creating Classes](#creating-classes)
+- [Inheriting from a Class](#inheriting-from-a-class)
+- [Adding Initializers for Classes](#adding-initializers-for-classes)
+- [Copying Classes](#copying-classes)
+- [De-initializing a Class](#de-initializing-a-class)
+- [Working with Variables Inside Classes](#working-with-variables-inside-classes)
+- [Protocols and Extensions](#protocols-and-extensions)
+- [Protocol Extensions](#protocol-extensions)
+- [Protocol-Oriented Programming](#protocol-oriented-programming)
+- [Optionals](#optionals)
+- [Nil Coalescing](#nil-coalescing)
+- [Optional Chaining](#optional-chaining)
+- [Optional try](#optional-try)
+- [Failable Initializers](#failable-initializers)
+- [Typecasting](#typecasting)
+
+## Constants and Variables
 - Variable: It's value can vary <br>
 - It's good to give a variable a descriptive name <br>
 `var greeting = "Jambo" `
@@ -43,7 +96,7 @@ var sentence = """
     print(upperCasedName)
 ```
 
-- Check Prefix & Suffix
+- Check Prefix and Suffix
 ```Swift
     print(sentence.hasPrefix("A day"))
     print(sentence.hasSuffix("Dev"))
@@ -207,7 +260,7 @@ NB: Returns a new array, while the original array remains unchanged
     print(cities.reversed())
 ```
 
-## Storing & Finding Data in Dictionaries
+## Storing and Finding Data in Dictionaries
 Dictionaries don't store items according to their position like arrays do, but instead let us decide where items should be stored. <br>
 Dictionaries stores associations between keys of the same type and values of the same type in a collection with no defined ordering <br>
 When reading from a dictionary, there's a chance that the key does not exist, or the key has no value, hence it always returns an optional. <br>
@@ -283,7 +336,7 @@ Type annotation let's us be specific about the data type we want
     let sharp: Bool = true
     let schoolsLearnt: [String] = ["MEC", "Mang'u", "Strathmore"]
     let details: [String: String] = ["id": "134327"]
-    let booksRead: Set<String> = Set(["The Subtle Art...", "How to Make Friends & Influence People"])
+    let booksRead: Set<String> = Set(["The Subtle Art...", "How to Make Friends and Influence People"])
 ```
 Declaring an empty array
 ```Swift
@@ -382,7 +435,7 @@ if statements lets us check whether a condition is true
     }
 
     // logical 'and'
-    if temp > 20 && temp < 30 {
+    if temp > 20 andand temp < 30 {
         print("Favorable weather conditions")
     }
 
@@ -498,7 +551,7 @@ The ternary operator lets us check a condition and return one of two values
 
     // loop body - code inside the braces
     // loop iteration - one cycle through the loop body
-    // loop variable - exists only inside the loop body & will change to a new value in the next loop iteration
+    // loop variable - exists only inside the loop body and will change to a new value in the next loop iteration
 
     let platforms = ["iOS", "macOS", "tvOS", "wathcOS", "visionOS"]
 
@@ -561,7 +614,7 @@ For example; when rolling a virtual dice and ending the loop when 6 is rolled
         print("I rolled a \(roll)")
     }
 ```
-## Skipping Loop Items with Break & Continue
+## Skipping Loop Items with Break and Continue
 - Continue: skips the current loop iteration
 - Break: exits the loop skips all remaining iterations
 
@@ -588,7 +641,7 @@ For example; when rolling a virtual dice and ending the loop when 6 is rolled
     var multiples = [Int]()
 
     for i in 1...100_000 {
-        if i.isMultiple(of: number1) && i.isMultiple(of: number2) {
+        if i.isMultiple(of: number1) andand i.isMultiple(of: number2) {
             multiples.append(i)
 
             if multiples.count == 10 {
@@ -610,7 +663,7 @@ Your goal is to loop from 1 through 100, and for each number:
 
 ```Swift
     for i in 1...100 {
-        if i.isMultiple(of: 3) && i.isMultiple(of: 5) {
+        if i.isMultiple(of: 3) andand i.isMultiple(of: 5) {
             print("FizzBuzz")
 
         } else if i.isMultiple(of: 3) {
@@ -875,7 +928,7 @@ The challenge is this: write a function that accepts an integer from 1 through 1
     }
 
     func squareRoot(number: Int) throws -> Int {
-        if number > 1 && number <= 10_000 {
+        if number > 1 andand number <= 10_000 {
             for i in 1...100 {
                 if i*i == number {
                     return i
@@ -899,7 +952,7 @@ The challenge is this: write a function that accepts an integer from 1 through 1
     }
 ```
 
-## Creating & Using Closures
+## Creating and Using Closures
 ```Swift
     // create closure
     let sayHello = {
@@ -1158,7 +1211,7 @@ Your job is to:
 ```
 ## Creating Structs
 - Swift's structs let us create our own custom, complex data types, complete with their own variables, and functions
-- Variables & constants that belong to structs are called properties
+- Variables and constants that belong to structs are called properties
 - Functions that belong to structs are called methods
 - An instance of a struct is created when a constant or variable is created from the struct
 
@@ -1234,7 +1287,7 @@ A struct can have two types of variables; <br>
     print(archer.vacationRemaining)
 
     
-    // reading from & writing to computed properties
+    // reading from and writing to computed properties
     var vacationRemaining: Int {
         get {
             vacationAllocated - vacationTaken
@@ -1255,7 +1308,7 @@ A struct can have two types of variables; <br>
 
 ## Taking Action when a Property Changes
 - Swift enables us to set property observers, which are special code blocks that run when properties change
-- There are of two forms; didSet & willSet
+- There are of two forms; didSet and willSet
 - didSet; runs when the property just changed
 - willSet; runs before the property changes
 
@@ -1350,7 +1403,7 @@ Swift provides us with a couple of access controls; <br>
 - public: Let anyone, anywhere use this
 - private(set): let anyone read this property, but only let methods inside the struct write to it
 
-## Static Properties & Methods
+## Static Properties and Methods
 - Each instance of a struct has its own unique copy of properties and methods
 - Sometimes, you want to add a property or method to the struct directly and not its instance, which enables you to use them directly
 - Uses of static properties and methods include; <br>
@@ -1372,11 +1425,11 @@ Swift provides us with a couple of access controls; <br>
     School.add(student: "Lee Sangoroh")
     print(School.studentCount)
 ```
-## Mixing Static & Non-Static Properties and Methods
+## Mixing Static and Non-Static Properties and Methods
 - Rule One: You can't refer non-static properties and methods from static properties or methods
 - Rule Two: To access static code from non-static code, use your type's name e.g. School.studentCount, or use Self to refer to the current type
 
-**Difference btw self & Self** <br>
+**Difference btw self and Self** <br>
 - self: refers to the current value of the struct
 - Self: refers to the current type
 
@@ -1429,7 +1482,7 @@ Swift provides us with a couple of access controls; <br>
 ## Creating Classes
 Apart from structs, Classes are also another way of creating custom data types <br>
 
-**Differences between classes & structs** <br>
+**Differences between classes and structs** <br>
 1. You can make one class build upon functionality in another class, gaining all its properties and methods as a starting point. You can also selectively override some methods.
 2. There are no automatically generated memberwise initializers for classes. Either write you own, or assign default values
 3. When you copy an instance of a class, both copies share the same data - if you change one copy, the other one also changes <br>
@@ -1573,7 +1626,7 @@ Swift's classes can optionally be given a de-initializer
         }
     }
 
-    // creating & destroying instances
+    // creating and destroying instances
     // if we create a User instance inside a loop, it will be destroyes when each loop iteration finishes
     for i in 1...3 {
         let user = User(id: i)
@@ -1659,7 +1712,7 @@ But there’s more:
     }
 ```
 
-## Protocols & Extensions
+## Protocols and Extensions
 Protocols are like agreements in Swift; they let us define what kinds of functionality we expect a data type to support, and Swift ensures that the rest of our code follows those rules <br>
 Protocols let us define properties and methods that we want to use without implementing those properties and methods.<br>
 Protocols act as blueprints
@@ -1793,11 +1846,11 @@ Protocols act as blueprints
 ```
 
 ## Protocol Extensions
-- Protocols: let us describe what properties & methods something should have, but don't provide implementation
+- Protocols: let us describe what properties and methods something should have, but don't provide implementation
 - Extensions: let us provide implementation of methods, but only affect one data type i.e. one can't add the method to lots of types at the same time
 - Protocol Extensions; are like regular extensions, but instead of extending a specific type like Int, we extend a whole protocol so that all conforming types get the changes
 ```Swift
-    // both arrays & sets conform to Swift's collection protocol
+    // both arrays and sets conform to Swift's collection protocol
     let sangorohs = ["Lee", "Rachael", "Roy"]
     let operations = Set(["addition", "subtraction"])
 
@@ -2072,7 +2125,7 @@ Your protocol should require the following:
     //array of fish and dogs
     let pets = [Fish(), Dog(), Fish(), Dog()]
 
-    //both Fish & Dog inherit from Animal class, hence type inference is used to make pets an array of Animal
+    //both Fish and Dog inherit from Animal class, hence type inference is used to make pets an array of Animal
 
     // if we want to loop over pets and ask all dogs to bark
     // we need to perform a typecase: Swift will check whether each pet is a Dog object
