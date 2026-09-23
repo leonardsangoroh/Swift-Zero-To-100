@@ -437,7 +437,7 @@ if statements lets us check whether a condition is true
     }
 
     // logical 'and'
-    if temp > 20 andand temp < 30 {
+    if temp > 20 and temp < 30 {
         print("Favorable weather conditions")
     }
 
@@ -643,7 +643,7 @@ For example; when rolling a virtual dice and ending the loop when 6 is rolled
     var multiples = [Int]()
 
     for i in 1...100_000 {
-        if i.isMultiple(of: number1) andand i.isMultiple(of: number2) {
+        if i.isMultiple(of: number1) && i.isMultiple(of: number2) {
             multiples.append(i)
 
             if multiples.count == 10 {
@@ -665,7 +665,7 @@ Your goal is to loop from 1 through 100, and for each number:
 
 ```Swift
     for i in 1...100 {
-        if i.isMultiple(of: 3) andand i.isMultiple(of: 5) {
+        if i.isMultiple(of: 3) && i.isMultiple(of: 5) {
             print("FizzBuzz")
 
         } else if i.isMultiple(of: 3) {
@@ -930,7 +930,7 @@ The challenge is this: write a function that accepts an integer from 1 through 1
     }
 
     func squareRoot(number: Int) throws -> Int {
-        if number > 1 andand number <= 10_000 {
+        if number > 1 && number <= 10_000 {
             for i in 1...100 {
                 if i*i == number {
                     return i
