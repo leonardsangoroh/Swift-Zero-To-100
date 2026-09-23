@@ -437,7 +437,7 @@ if statements lets us check whether a condition is true
     }
 
     // logical 'and'
-    if temp > 20 and temp < 30 {
+    if temp > 20 && temp < 30 {
         print("Favorable weather conditions")
     }
 
