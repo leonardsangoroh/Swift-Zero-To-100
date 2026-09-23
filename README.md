@@ -56,7 +56,7 @@ Whether you're new to programming or an experienced developer, this guide will h
 - [Acknowledgement](#acknowledgement)
 
 ## Constants and Variables
-- Variable: It's value can vary <br>
+- Variable: Its value can vary <br>
 - It's good to give a variable a descriptive name <br>
 `var greeting = "Jambo" `
 
