@@ -223,7 +223,7 @@ Arrays can only store one data type at a time
 
 - Declaring an Empty Array
 ```Swift
-    var albums = Array<Stringt>()
+    var albums = Array<String>()
     albums.append("African Giant")
 
     var numbers = [Int]()
