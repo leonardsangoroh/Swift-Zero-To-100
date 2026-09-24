@@ -1582,7 +1582,7 @@ When a class inherits functionality from another, Swift gives the child class ac
     var userOne = User() //leonardsangoroh
     var userTwo = userOne // leonardsangoroh
 
-    userTwo = "leonard"
+    userTwo.username = "leonard"
 
     // both userOne and userTwo change to 'leonard'
     print(user1.username)  
