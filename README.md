@@ -1589,7 +1589,7 @@ When a class inherits functionality from another, Swift gives the child class ac
     print(user2.username)
 ```
 
-- If you want to create a unique copy of a class instance (deep copy), you need to handle creating a new instance and copy acros all your data safely
+- If you want to create a unique copy of a class instance (deep copy), you need to handle creating a new instance and copy across all your data safely
 ```Swift
     class User {
         var username = "Anonymous"
@@ -1628,7 +1628,7 @@ Swift's classes can optionally be given a de-initializer
     }
 
     // creating and destroying instances
-    // if we create a User instance inside a loop, it will be destroyes when each loop iteration finishes
+    // if we create a User instance inside a loop, it will be destroyed when each loop iteration finishes
     for i in 1...3 {
         let user = User(id: i)
         print("User \(user.id): I'm in control!")
