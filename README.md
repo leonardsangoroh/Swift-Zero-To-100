@@ -1370,7 +1370,7 @@ A struct can have two types of variables; <br>
 - Sometimes, you want to hide some data from external access
 
 ```Swift
-    struct BackAccount {
+    struct BankAccount {
         // make funds variable inaccessible outside the struct to prevent people
         // from adjusting their real balance
         private var funds = 0
@@ -1387,16 +1387,15 @@ A struct can have two types of variables; <br>
                 return false
             }
         }
+    }
+    var account = BankAccount()
+    account.deposit(amount: 100)
+    let success = account.withdraw(amount: 200)
 
-        var account = BankAccount()
-        account.deposit(amount: 100)
-        let success = account.withdraw(amount: 200)
-
-        if success {
-            print("Withdrew money successfully")
-        } else {
-            print("Failed to get the money")
-        }
+    if success {
+        print("Withdrew money successfully")
+    } else {
+        print("Failed to get the money")
     }
 ```
 Swift provides us with a couple of access controls; <br>
